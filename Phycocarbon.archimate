@@ -47,7 +47,25 @@
     <element xsi:type="archimate:DataObject" name="Crédito de Carbono" id="data-carbono"/>
     <element xsi:type="archimate:DataObject" name="Transação Marketplace" id="data-transacao"/>
   </folder>
-  <folder name="Technology &amp; Physical" id="id-378c9420d2f84c4faa9f80ddf0be3305" type="technology"/>
+  <folder name="Technology &amp; Physical" id="id-378c9420d2f84c4faa9f80ddf0be3305" type="technology">
+    <element xsi:type="archimate:Node" name="Nó de Borda" id="node-borda"/>
+    <element xsi:type="archimate:Node" name="Nó de Aplicação Cloud" id="node-cloud"/>
+    <element xsi:type="archimate:Node" name="Nó de Persistência Relacional" id="node-db"/>
+    <element xsi:type="archimate:Node" name="Nó de Processamento Preditivo" id="node-ai"/>
+    <element xsi:type="archimate:Device" name="Microcontrolador de Borda" id="device-borda"/>
+    <element xsi:type="archimate:Device" name="Sensores Acoplados" id="device-sensores"/>
+    <element xsi:type="archimate:Device" name="Atuadores Físicos Simulados" id="device-atuadores"/>
+    <element xsi:type="archimate:Device" name="Dispositivos de Interface" id="device-interface"/>
+    <element xsi:type="archimate:SystemSoftware" name="Oracle DBMS" id="sw-oracle"/>
+    <element xsi:type="archimate:SystemSoftware" name="Mosquitto MQTT Broker" id="sw-mqtt"/>
+    <element xsi:type="archimate:SystemSoftware" name="Docker" id="sw-docker"/>
+    <element xsi:type="archimate:SystemSoftware" name="Java Runtime" id="sw-java"/>
+    <element xsi:type="archimate:SystemSoftware" name=".NET Runtime" id="sw-dotnet"/>
+    <element xsi:type="archimate:SystemSoftware" name="Python Runtime" id="sw-python"/>
+    <element xsi:type="archimate:CommunicationNetwork" name="Rede MQTT" id="network-mqtt"/>
+    <element xsi:type="archimate:CommunicationNetwork" name="Rede HTTPS" id="network-https"/>
+    <element xsi:type="archimate:CommunicationNetwork" name="Rede TCP/IP Interna" id="network-tcp"/>
+  </folder>
   <folder name="Motivation" id="id-750ba7a6e13645e79a245e1f15eeee96" type="motivation">
     <element xsi:type="archimate:Stakeholder" name="Cooperativas Agrícolas" id="id-e2b4e6508e444239beba2b3a718979db"/>
     <element xsi:type="archimate:Stakeholder" name="Operadores de Campo" id="id-93ec95ebe3cb4eb0a405758ee23ab560"/>
@@ -144,6 +162,27 @@
     <element xsi:type="archimate:ServingRelationship" id="rel-bs-predicao-app" source="id-business-service-predicao" target="service-preditivo"/>
     <element xsi:type="archimate:ServingRelationship" id="rel-bs-auditoria-app" source="id-business-service-auditoria" target="service-auditoria"/>
     <element xsi:type="archimate:ServingRelationship" id="rel-bs-marketplace-app" source="id-business-service-marketplace" target="service-marketplace"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-device-borda-node" source="device-borda" target="node-borda"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-device-interface-node" source="device-interface" target="node-cloud"/>
+    <element xsi:type="archimate:CompositionRelationship" id="rel-sensor-borda" source="device-borda" target="device-sensores"/>
+    <element xsi:type="archimate:CompositionRelationship" id="rel-atuador-borda" source="device-borda" target="device-atuadores"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-node-borda-mqtt" source="node-borda" target="sw-mqtt"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-node-cloud-java" source="node-cloud" target="sw-java"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-node-cloud-dotnet" source="node-cloud" target="sw-dotnet"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-node-db-oracle" source="node-db" target="sw-oracle"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-node-ai-python" source="node-ai" target="sw-python"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-node-cloud-docker" source="node-cloud" target="sw-docker"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-node-db-docker" source="node-db" target="sw-docker"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-node-ai-docker" source="node-ai" target="sw-docker"/>
+    <element xsi:type="archimate:AssociationRelationship" id="rel-node-borda-mqtt-network" source="node-borda" target="network-mqtt"/>
+    <element xsi:type="archimate:AssociationRelationship" id="rel-node-cloud-https-network" source="node-cloud" target="network-https"/>
+    <element xsi:type="archimate:AssociationRelationship" id="rel-node-db-tcp-network" source="node-db" target="network-tcp"/>
+    <element xsi:type="archimate:AssociationRelationship" id="rel-node-ai-https-network" source="node-ai" target="network-https"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="rel-mobile-device" source="app-mobile" target="device-interface"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-1432094c29da483eadaea40d478db0f7" source="node-cloud" target="network-mqtt"/>
+    <element xsi:type="archimate:FlowRelationship" id="id-3cb4667eb7d442a3afb934aa3c64dedd" source="node-cloud" target="node-ai"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-25efb5e30e6c43b98c3548dc5ddd8ed8" source="interface-mqtt" target="sw-mqtt"/>
+    <element xsi:type="archimate:AssociationRelationship" id="id-b58f743cf50841f793ab53de45c23ae8" source="app-api" target="node-cloud"/>
   </folder>
   <folder name="Views" id="id-3536d71e29634319aac0f6dfcb8024aa" type="diagrams">
     <element xsi:type="archimate:ArchimateDiagramModel" name="Default View" id="id-2d2600c09f814423a7a0f72a40616e26">
@@ -322,6 +361,7 @@
       </child>
       <child xsi:type="archimate:DiagramObject" id="id-fae80165cfd241459ea710fb02ed7d39" targetConnections="id-8c44b1328e7c4edf8ded08b8438d7ece" archimateElement="interface-mqtt">
         <bounds x="1812" y="1416" width="120" height="55"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-0676025daab44a7684ba6f247c263585" source="id-fae80165cfd241459ea710fb02ed7d39" target="id-72ba4196633e4ef1baec66a18b53db8c" archimateRelationship="id-25efb5e30e6c43b98c3548dc5ddd8ed8"/>
       </child>
       <child xsi:type="archimate:DiagramObject" id="id-08b2b5a33ef74f5887c21f429c3c2be4" targetConnections="id-057b194abd4447178fee17038581a05c" archimateElement="data-carbono">
         <bounds x="997" y="1848" width="120" height="55"/>
@@ -366,11 +406,13 @@
         <sourceConnection xsi:type="archimate:Connection" id="id-f1c52bc9ec5b43e0934b8e258f0bb02b" source="id-25d5778d3a1044aca90bfb08930a2877" target="id-189f4c209ddf4a5fa0f7b5c920f0bfd0" archimateRelationship="rel-api-tanque"/>
         <sourceConnection xsi:type="archimate:Connection" id="id-5172ae577b0f42489943862d7cc00c36" source="id-25d5778d3a1044aca90bfb08930a2877" target="id-d220d1f7d4c945c8be4f2579cf3099e7" archimateRelationship="rel-api-transacao"/>
         <sourceConnection xsi:type="archimate:Connection" id="id-c08ec633526c42fabb56f128e3b7a1a8" source="id-25d5778d3a1044aca90bfb08930a2877" target="id-ab16e7404094411393fcdb03ae53e77f" archimateRelationship="rel-api-usuario"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-06e6f31f46484d0d96452a33e44531ff" source="id-25d5778d3a1044aca90bfb08930a2877" target="id-488d0531875b4a48a087c0432789695e" archimateRelationship="id-b58f743cf50841f793ab53de45c23ae8"/>
       </child>
       <child xsi:type="archimate:DiagramObject" id="id-6d4ba30f1b774bd0b3d9e3a27a8a72be" archimateElement="app-mobile">
-        <bounds x="1776" y="1638" width="120" height="55"/>
+        <bounds x="1872" y="1626" width="120" height="55"/>
         <sourceConnection xsi:type="archimate:Connection" id="id-93c46d6261524cfe8b14624dc36affd4" source="id-6d4ba30f1b774bd0b3d9e3a27a8a72be" target="id-c243521c4ac945c8b0a4efd94cc35fa6" archimateRelationship="rel-mobile-interface"/>
         <sourceConnection xsi:type="archimate:Connection" id="id-bbf0ad0d59244405b8393351f1a1f059" source="id-6d4ba30f1b774bd0b3d9e3a27a8a72be" target="id-25d5778d3a1044aca90bfb08930a2877" archimateRelationship="rel-mobile-api"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c3fe4030d1c74994872854b52a09738d" source="id-6d4ba30f1b774bd0b3d9e3a27a8a72be" target="id-fa1a139623124f99a27ed939c1c3b092" archimateRelationship="rel-mobile-device"/>
       </child>
       <child xsi:type="archimate:DiagramObject" id="id-37ecde781b134008b44831ba1f975057" archimateElement="app-web">
         <bounds x="1258" y="1680" width="120" height="55"/>
@@ -403,6 +445,75 @@
       </child>
       <child xsi:type="archimate:DiagramObject" id="id-ab16e7404094411393fcdb03ae53e77f" targetConnections="id-c08ec633526c42fabb56f128e3b7a1a8" archimateElement="data-usuario">
         <bounds x="1332" y="1824" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-30162d0bc6474b36827b6c5900dd48d1" targetConnections="id-51de7a373b7c4f4093af09dc90a0698e" archimateElement="sw-dotnet">
+        <bounds x="2364" y="1704" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-791fcfbd53824fc197c60341766aff31" targetConnections="id-d4d09b11277f4086b973bffe581d9dc0" archimateElement="device-atuadores">
+        <bounds x="2352" y="2148" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-fa1a139623124f99a27ed939c1c3b092" targetConnections="id-c3fe4030d1c74994872854b52a09738d" archimateElement="device-interface">
+        <bounds x="2196" y="1680" width="120" height="55"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-f8d05e98b00f49b1a2c9276fabb65d83" source="id-fa1a139623124f99a27ed939c1c3b092" target="id-488d0531875b4a48a087c0432789695e" archimateRelationship="rel-device-interface-node"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-f0d52ba0f1e440d4960c57f389710a8b" targetConnections="id-b96a865385604816b356062e4ecff8b4 id-46674dfc2524497f9d9ad236acf54bed id-d4cccc49ff8e4becae07a5d77aa8db04" archimateElement="sw-docker">
+        <bounds x="2027" y="1908" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-dad842081b674e8eb401f255999889e8" targetConnections="id-c1535106a2b8494889e9bb5b53577789" archimateElement="sw-java">
+        <bounds x="2050" y="1788" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-ad3cbd9c84c44ce0b4b2548e65f2c3c6" archimateElement="device-borda">
+        <bounds x="2532" y="2118" width="120" height="55"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-d4d09b11277f4086b973bffe581d9dc0" source="id-ad3cbd9c84c44ce0b4b2548e65f2c3c6" target="id-791fcfbd53824fc197c60341766aff31" archimateRelationship="rel-atuador-borda"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-3529a86a7b154e04b36686fe53fcaacf" source="id-ad3cbd9c84c44ce0b4b2548e65f2c3c6" target="id-219cb20b5b3d456faedc4d4d493c2f96" archimateRelationship="rel-device-borda-node"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-f665252de2514964a133e693f00edcd1" source="id-ad3cbd9c84c44ce0b4b2548e65f2c3c6" target="id-8e6ab1c2dbe2472688c70529d59c9944" archimateRelationship="rel-sensor-borda"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-72ba4196633e4ef1baec66a18b53db8c" targetConnections="id-e0706bc7217e497c938baa9d8f2b58b5 id-0676025daab44a7684ba6f247c263585" archimateElement="sw-mqtt">
+        <bounds x="2544" y="1662" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-488d0531875b4a48a087c0432789695e" targetConnections="id-f8d05e98b00f49b1a2c9276fabb65d83 id-06e6f31f46484d0d96452a33e44531ff" archimateElement="node-cloud">
+        <bounds x="2232" y="1800" width="120" height="55"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-51de7a373b7c4f4093af09dc90a0698e" source="id-488d0531875b4a48a087c0432789695e" target="id-30162d0bc6474b36827b6c5900dd48d1" archimateRelationship="rel-node-cloud-dotnet"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-d4cccc49ff8e4becae07a5d77aa8db04" source="id-488d0531875b4a48a087c0432789695e" target="id-f0d52ba0f1e440d4960c57f389710a8b" archimateRelationship="rel-node-cloud-docker"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c1535106a2b8494889e9bb5b53577789" source="id-488d0531875b4a48a087c0432789695e" target="id-dad842081b674e8eb401f255999889e8" archimateRelationship="rel-node-cloud-java"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-e6af127e4a2b4ccab21ee9d94ae07d07" source="id-488d0531875b4a48a087c0432789695e" target="id-6c54537420d947b6a478bb755178d38c" archimateRelationship="rel-node-cloud-https-network"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-6849bdb78e8d4305ad217de77b97710a" source="id-488d0531875b4a48a087c0432789695e" target="id-15342aa4e9b745b1a7c1101e0cb5653c" archimateRelationship="id-1432094c29da483eadaea40d478db0f7"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-7b42e0769889466d86d1965b32fee28e" source="id-488d0531875b4a48a087c0432789695e" target="id-16b324fb2af74dd78616d7f12a89b00f" archimateRelationship="id-3cb4667eb7d442a3afb934aa3c64dedd"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-219cb20b5b3d456faedc4d4d493c2f96" targetConnections="id-3529a86a7b154e04b36686fe53fcaacf" archimateElement="node-borda">
+        <bounds x="2556" y="1944" width="120" height="55"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-e0706bc7217e497c938baa9d8f2b58b5" source="id-219cb20b5b3d456faedc4d4d493c2f96" target="id-72ba4196633e4ef1baec66a18b53db8c" archimateRelationship="rel-node-borda-mqtt"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-0578c4a617f64b68aed1b55c47b14d99" source="id-219cb20b5b3d456faedc4d4d493c2f96" target="id-15342aa4e9b745b1a7c1101e0cb5653c" archimateRelationship="rel-node-borda-mqtt-network"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-0f559d61fc614101932a6fe6ffa6aff7" archimateElement="node-db">
+        <bounds x="1968" y="2028" width="120" height="55"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-46674dfc2524497f9d9ad236acf54bed" source="id-0f559d61fc614101932a6fe6ffa6aff7" target="id-f0d52ba0f1e440d4960c57f389710a8b" archimateRelationship="rel-node-db-docker"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-fd73847606e14b5eb1b0cb7312402de5" source="id-0f559d61fc614101932a6fe6ffa6aff7" target="id-7c10743cef864a439407906c004b3c99" archimateRelationship="rel-node-db-oracle"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-74c75f7c96554a40b14887c599a2a70c" source="id-0f559d61fc614101932a6fe6ffa6aff7" target="id-19225d86a96e457c8c713516265bb658" archimateRelationship="rel-node-db-tcp-network"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-16b324fb2af74dd78616d7f12a89b00f" targetConnections="id-7b42e0769889466d86d1965b32fee28e" archimateElement="node-ai">
+        <bounds x="2220" y="1908" width="120" height="55"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-b96a865385604816b356062e4ecff8b4" source="id-16b324fb2af74dd78616d7f12a89b00f" target="id-f0d52ba0f1e440d4960c57f389710a8b" archimateRelationship="rel-node-ai-docker"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-c129a522f188476497bd502d1e4f3774" source="id-16b324fb2af74dd78616d7f12a89b00f" target="id-baf74bbf81f8403188dcfc3714af4b8a" archimateRelationship="rel-node-ai-python"/>
+        <sourceConnection xsi:type="archimate:Connection" id="id-f8b19d4e4dab41c29b8d0cd57fefdc84" source="id-16b324fb2af74dd78616d7f12a89b00f" target="id-6c54537420d947b6a478bb755178d38c" archimateRelationship="rel-node-ai-https-network"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-7c10743cef864a439407906c004b3c99" targetConnections="id-fd73847606e14b5eb1b0cb7312402de5" archimateElement="sw-oracle">
+        <bounds x="1800" y="1956" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-baf74bbf81f8403188dcfc3714af4b8a" targetConnections="id-c129a522f188476497bd502d1e4f3774" archimateElement="sw-python">
+        <bounds x="2160" y="2040" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-6c54537420d947b6a478bb755178d38c" targetConnections="id-e6af127e4a2b4ccab21ee9d94ae07d07 id-f8b19d4e4dab41c29b8d0cd57fefdc84" archimateElement="network-https">
+        <bounds x="2388" y="1902" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-15342aa4e9b745b1a7c1101e0cb5653c" targetConnections="id-0578c4a617f64b68aed1b55c47b14d99 id-6849bdb78e8d4305ad217de77b97710a" archimateElement="network-mqtt">
+        <bounds x="2424" y="1812" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-19225d86a96e457c8c713516265bb658" targetConnections="id-74c75f7c96554a40b14887c599a2a70c" archimateElement="network-tcp">
+        <bounds x="1968" y="2172" width="120" height="55"/>
+      </child>
+      <child xsi:type="archimate:DiagramObject" id="id-8e6ab1c2dbe2472688c70529d59c9944" targetConnections="id-f665252de2514964a133e693f00edcd1" archimateElement="device-sensores">
+        <bounds x="2364" y="2028" width="120" height="55"/>
       </child>
     </element>
   </folder>
